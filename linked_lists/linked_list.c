@@ -16,21 +16,22 @@ node* create(int value)
     // Initialize values for the created node
     new->number = value;
     new->next = NULL;
+    new->prev = NULL;
 
     return new;
 }
 
 // Find an element in the list
-int find(node* head, int value)
+node* find(node* head, int value)
 {
     // Create a traversal pointer pointing to the list's head
     node* traversal = head;
 
     // Check if node's number is equal to `value`
     if (traversal->number == value) 
-        return 1;
+        return traversal;
     else if (traversal->next == NULL)
-        return 0;
+        return NULL;
 
     // Recursive call
     find(traversal->next, value);
@@ -51,6 +52,8 @@ node* insert(node* head, int value)
 
     // New is now pointing to the old head and becomes the new head
     new->next = head;
+    new->prev = NULL;
+    head->prev = new;
     head = new;
 
     return new;
@@ -69,11 +72,31 @@ void destroy(node* head)
     free(head);
 }
 
-// Print all elementos of the list
+void delete(node* head, node* target)
+{
+    if (target->prev == NULL) 
+    {
+        target->next->prev = NULL;
+        head = target->next;
+    }
+    else if (target->next == NULL)
+        target->next = NULL;
+    else 
+    {
+        target->prev->next = target->next;
+        target->next->prev = target->prev;
+    }
+
+    free(target);
+}
+
+// Print all elements of the list
 void print_elements(node* head)
 {
+    printf("===============\n");
     for (node* n = head; n != NULL; n = n->next)
     {
         printf("%i\n", n->number);
     }
+    printf("===============\n");
 }
