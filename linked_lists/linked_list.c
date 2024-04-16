@@ -74,20 +74,26 @@ void destroy(node* head)
 
 void delete(node* head, node* target)
 {
-    if (target->prev == NULL) 
+    if (target != NULL) 
     {
-        target->next->prev = NULL;
-        head = target->next;
-    }
-    else if (target->next == NULL)
-        target->next = NULL;
-    else 
-    {
-        target->prev->next = target->next;
-        target->next->prev = target->prev;
-    }
+        // Change the list head if target is the current head
+        if (target->prev == NULL) 
+        {
+            target->next->prev = NULL;
+            head = target->next;
+        }
+        // Just change the next element of the target prev element
+        else if (target->next == NULL)
+            target->prev->next = NULL;
+        // Deletion if target is neither head nor the last element
+        else 
+        {
+            target->prev->next = target->next;
+            target->next->prev = target->prev;
+        }
 
-    free(target);
+        free(target);
+    }
 }
 
 // Print all elements of the list
