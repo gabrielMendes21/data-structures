@@ -7,7 +7,7 @@ int main(void)
     node* node = create(50);
 
     // Find number 50
-    find(node, 50) == 1 ? printf("Found!\n") : printf("Not found\n");
+    find(node, 50) != NULL ? printf("Found!\n") : printf("Not found\n");
 
     // Insert 18
     node = insert(node, 18);
