@@ -38,7 +38,7 @@ node* find(node* head, int value)
 }
 
 // Insert a new node at the beginning of the linked list
-node* insert(node* head, int value)
+node* insert(node** head, int value)
 {
     node* new = malloc(sizeof(node));
     if (new == NULL)
@@ -51,10 +51,10 @@ node* insert(node* head, int value)
     new->number = value;
 
     // New is now pointing to the old head and becomes the new head
-    new->next = head;
+    new->next = *head;
     new->prev = NULL;
-    head->prev = new;
-    head = new;
+    (*head)->prev = new;
+    *head = new;
 
     return new;
 }
@@ -72,7 +72,8 @@ void destroy(node* head)
     free(head);
 }
 
-void delete(node* head, node* target)
+// Delete an element of the list
+void delete(node** head, node* target)
 {
     if (target != NULL) 
     {
@@ -80,7 +81,7 @@ void delete(node* head, node* target)
         if (target->prev == NULL) 
         {
             target->next->prev = NULL;
-            head = target->next;
+            *head = target->next;
         }
         // Just change the next element of the target prev element
         else if (target->next == NULL)
