@@ -33,6 +33,7 @@ void enqueue(queue** tail, int value)
     // Populate `new`
     new->value = value;
     new->next = NULL;
+    // `tail` is pointing to a pointer of the list's tail, so you need to dereference it once to get the pointer to the tail, and dereference it twice to get the tail
     new->prev = *tail;
 
     // Add `new` to the queue tail
